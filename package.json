@@ -4,10 +4,12 @@
   "description": "GameBattles clone",
   "main": "index.js",
   "dependencies": {
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "mongoose": "^5.8.11"
   },
   "devDependencies": {
     "@types/express": "^4.17.2",
+    "@types/mongoose": "^5.7.0",
     "@types/node": "^13.7.0",
     "nodemon": "^2.0.2",
     "ts-node": "^8.6.2",
