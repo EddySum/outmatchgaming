@@ -37,10 +37,9 @@ const userSchema: Schema = new Schema({
     }
   }, 
   xboxUser: String,
-  rank: Number
+  points: Number
   //teams: [{type: mongoose.Schema.Types.ObjectId, ref: 'Team'}] /* uncomment once teams schema is created */
 });
-
 
 const User = mongoose.model<IUser>('user', userSchema);
 

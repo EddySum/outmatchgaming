@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import mongoose from 'mongoose';
-import User from '../src/models/User';
+import User, { IUser } from '../src/models/User';
 
 describe ('User model', () => {
   beforeEach(async () => {
@@ -14,10 +14,46 @@ describe ('User model', () => {
     mongoose.connection.close();
   });
 
-  it('should throw validation error', () => {
-    const user = new User();
+ 
 
-    expect(user.validate).throw();
+  describe('Username field unit test', () => {
+    it('Should store the user', () => {
+      const user: IUser = new User({
+        username: "Eddy_Sumra",
+      });
+  
+      const error = user.validateSync();
+      expect(error).to.equal(undefined);
+    });
+
+    it('Should have length bigger than 3', () => {
+      let user: IUser = new User({
+        username: "Ed",
+      });
+      
+      let error = user.validateSync();
+      expect(error).to.not.equal(undefined);
+    });
+
+    it('Should have length smaller than 16', () => {
+      let user: IUser = new User({
+        username: "ThisNameIs17chars",
+      });
+      
+      let error = user.validateSync();
+      expect(error).to.not.equal(undefined);
+    });
+
+    it('Should only consist of alphanumeric and `_`', () => {
+      let user: IUser = new User({
+        username: "E@%$#@",
+      });
+      
+      let error = user.validateSync();
+      expect(error).to.not.equal(undefined);
+    });
+
+
   });
 
 });
