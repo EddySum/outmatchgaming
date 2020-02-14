@@ -7,8 +7,6 @@ mongoose.connection.on('error', (err) => {
   console.log('Failed to connect MongoDB', err);
 });
 
-require('./models/User')
-
 /* Configure Express application */
 const app: express.Application = express(); 
 

@@ -3,7 +3,7 @@ import mongoose, { Schema, Document } from 'mongoose'
 export interface IUser extends Document {
   username: string;
   psnUser: string;
-  rank: string;
+  points: string;
 }
 
 const userSchema: Schema = new Schema({
@@ -38,7 +38,7 @@ const userSchema: Schema = new Schema({
   }, 
   xboxUser: String,
   points: Number
-  //teams: [{type: mongoose.Schema.Types.ObjectId, ref: 'Team'}] /* uncomment once teams schema is created */
+  //teams: [{type: mongoose.Schema.Types.ObjectId, ref: 'Team'}] /* Unsure if good design */
 });
 
 const User = mongoose.model<IUser>('user', userSchema);
