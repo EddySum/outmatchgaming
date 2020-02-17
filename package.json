@@ -23,7 +23,7 @@
     "start": "node ./dist/app.js",
     "dev": "nodemon ./src/app.ts",
     "build": "tsc -p .",
-    "test": "mocha ./dist/test"
+    "test": "mocha --exit ./dist/test"
   },
   "author": "Adnan Sumra (Eddy)",
   "license": "ISC"
