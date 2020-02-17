@@ -14,3 +14,10 @@ pipelines:
           - npm install
           - npm run build
           - npm run test
+          services: 
+          - mongo
+          
+definitions: 
+  services: 
+    mongo: 
+      image: mongo
