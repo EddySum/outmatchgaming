@@ -30,7 +30,7 @@ const userSchema: Schema = new Schema({
       validator: (psnUser: string) => {
         // regex: validates for letter, numbers, hyphens, underscores, hyphens 
         if (!(/^[a-zA-Z0-9_-]*$/.test(psnUser))) {
-          throw new Error(`${psnUser} is not a valid username. Please use letters, numbers, underscores and hyphens`);
+          throw new Error(`${psnUser} is not a valid psnUser. Please use letters, numbers, underscores and hyphens`);
         }
         return true;
       }

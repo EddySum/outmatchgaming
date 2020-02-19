@@ -103,7 +103,7 @@ describe ('User model', () => {
   });
 
   describe('points field test', () => {
-    it('accepts positve values', () => {
+    it('accepts positive values', () => {
       let user: IUser = new User({
         username: "Eddy",
         psnUser: "ed_sum-python",

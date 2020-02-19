@@ -1,4 +1,5 @@
 import mongoose, {Schema, Document } from 'mongoose';
+import Ladder from './Ladder';
 
 export interface ITeam extends Document {
   name: string;
@@ -9,16 +10,37 @@ export interface ITeam extends Document {
 
 const teamSchema: Schema = new Schema({
   name: {
-    type: String
+    type: String,
+    required: true,
+    validate: {
+      validator: (name: string) => {
+        if (name.length < 3 || name.length > 16) {
+          throw new Error(`${name} is not a valid team name. Plese keep name size must between 3 and 16`);
+        }  
+        return true;
+      }
+    }
   },
   ladder: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Ladder',
-    required: true
+    required: true,
+   /*  validate: {
+      validator: (id: mongoose.Schema.Types.ObjectId) => {
+          Ladder.exists({ _id: id }).then((exists) => {
+            console.log(exists);
+            return Promise.resolve(exists);
+          }).catch(() => {
+            Promise.resolve(false);
+          });
+
+          return true
+      }
+    } */
   },
   players: {
     type: [mongoose.Schema.Types.ObjectId],
-    ref: 'User'
+    ref: 'User',
   },
   points: {
     type: Number

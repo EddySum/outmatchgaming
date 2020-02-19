@@ -7,10 +7,18 @@ export interface ILadder extends Document {
   maxPlayers: Number
 }
 
-const ladderSchema: Schema = new Schema({
+export const ladderSchema: Schema = new Schema({
   name: {
     type: String,
-    required: true
+    required: true,
+    validate: {
+      validator: (name: string) => {
+        if (name.length < 3 || name.length > 16) {
+          throw new Error(`${name} is not a valid ladder name. Plese keep name size must between 3 and 16`);
+        }
+        return true;
+      }
+    }
   },
   seasonStart: {
     type: Date
@@ -18,9 +26,9 @@ const ladderSchema: Schema = new Schema({
   seasonEnd: {
     type: Date
   },
-  maxPlayers: {
+  maxTeamSize: {
     type: Number,
-    required: true
+    required: true,
   }
 });
 
