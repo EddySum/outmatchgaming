@@ -86,5 +86,29 @@ describe('Team Model', () => {
     });
   }); */
 
+  describe('points field test', () => {
+    it('accepts positive values', () => {
+      let team: ITeam = new Team({
+        name: '100 Theives',
+        ladder: ladder._id,
+        points: 0,
+      });
+
+      let error = team.validateSync();
+      expect(error).to.equal(undefined);
+    });
+
+    it('must not be negative', () => {
+      let user: ITeam = new Team({
+        name: '100 Theives',
+        ladder: ladder._id,
+        points: -1,
+      });
+
+      let error = user.validateSync();
+      expect(error).to.not.equal(undefined);
+    });
+  });
+
 
 });

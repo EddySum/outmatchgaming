@@ -41,9 +41,18 @@ const teamSchema: Schema = new Schema({
   players: {
     type: [mongoose.Schema.Types.ObjectId],
     ref: 'User',
+    // needs async validator
   },
   points: {
-    type: Number
+    type: Number,
+    validate: {
+      validator: (number: number) => {
+        if (number < 0) {
+          throw new Error(`number must be greater than 0`);
+        }
+        return true;
+      }
+    }
   }
 });
 

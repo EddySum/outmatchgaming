@@ -20,12 +20,6 @@ export const ladderSchema: Schema = new Schema({
       }
     }
   },
-  seasonStart: {
-    type: Date
-  },
-  seasonEnd: {
-    type: Date
-  },
   maxTeamSize: {
     type: Number,
     required: true,
