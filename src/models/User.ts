@@ -3,7 +3,7 @@ import mongoose, { Schema, Document } from 'mongoose'
 export interface IUser extends Document {
   username: string;
   psnUser: string;
-  points: string;
+  points: Number;
 }
 
 const userSchema: Schema = new Schema({
@@ -15,7 +15,7 @@ const userSchema: Schema = new Schema({
     validate: {
       validator: (username: string) => {
         // regex: checks alphanumeric. '_' only in middle of string
-        if (!/^[a-zA-Z0-9]+([_]?[a-zA-Z0-9])*$/.test(username)) {
+        if (!(/^[a-zA-Z0-9]+([_]?[a-zA-Z0-9])*$/.test(username))) {
           throw new Error(`${username} is not a valid username. Please use letters, numbers and '_'`);
         }
         return true;
@@ -27,18 +27,26 @@ const userSchema: Schema = new Schema({
     minlength: 3,
     maxlength: 16,
     validate: {
-      validator: (username: string) => {
+      validator: (psnUser: string) => {
         // regex: validates for letter, numbers, hyphens, underscores, hyphens 
-        if (!/^[a-z0-9_-]{3,16}$/.test(username)) {
-          throw new Error(`${username} is not a valid username. Please use letters, numbers, underscores and hyphens`);
+        if (!(/^[a-zA-Z0-9_-]*$/.test(psnUser))) {
+          throw new Error(`${psnUser} is not a valid username. Please use letters, numbers, underscores and hyphens`);
         }
         return true;
       }
     }
   }, 
-  xboxUser: String,
-  points: Number
-  //teams: [{type: mongoose.Schema.Types.ObjectId, ref: 'Team'}] /* Unsure if good design */
+  points: {
+    type: Number,
+    validate: {
+      validator: (number: number) => {
+        if (number < 0) {
+          throw new Error(`number must be greater than 0`);
+        }
+        return true;
+      }
+    }
+  }
 });
 
 const User = mongoose.model<IUser>('user', userSchema);
