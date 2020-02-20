@@ -1,5 +1,6 @@
 import mongoose, {Schema, Document } from 'mongoose';
 import Ladder from './Ladder';
+import User from './User';
 
 export interface ITeam extends Document {
   name: string;
@@ -25,23 +26,29 @@ const teamSchema: Schema = new Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Ladder',
     required: true,
-   /*  validate: {
-      validator: (id: mongoose.Schema.Types.ObjectId) => {
-          Ladder.exists({ _id: id }).then((exists) => {
-            console.log(exists);
-            return Promise.resolve(exists);
-          }).catch(() => {
-            Promise.resolve(false);
-          });
-
-          return true
+    validate: {
+      // ensure the ladder id exists in db
+      validator: async (id: mongoose.Schema.Types.ObjectId) => {
+        return await Ladder.exists({ _id: id });
       }
-    } */
+    }
   },
   players: {
     type: [mongoose.Schema.Types.ObjectId],
     ref: 'User',
-    // needs async validator
+    /* validate: {
+      // ensure the array of ids exist in db. Fix later
+      validator: async (ids: [mongoose.Schema.Types.ObjectId]) => {
+        ids.forEach(async id => {
+           const exists = await User.exists({ _id: id });
+           if (exists == false) {
+             return false;
+           }
+        });
+        return true; 
+      },
+      message: 'invalid player exists'
+    } */
   },
   points: {
     type: Number,

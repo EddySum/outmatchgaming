@@ -4,6 +4,8 @@ export interface IUser extends Document {
   username: string;
   psnUser: string;
   points: Number;
+  email: String;
+  domain: String;
 }
 
 const userSchema: Schema = new Schema({
@@ -21,6 +23,12 @@ const userSchema: Schema = new Schema({
         return true;
       }
     }
+  },
+  email: {
+    type: String,
+  },
+  domain: {
+    type: String
   },
   psnUser: {
     type: String, 
@@ -46,7 +54,18 @@ const userSchema: Schema = new Schema({
         return true;
       }
     }
-  }
+  },
+});
+
+// virtual will take full email as input and split apart into email and domain properties
+userSchema.virtual("fullEmail")
+.get(function(this: IUser) {
+  return this.email + '@' + this.domain;
+})
+.set(function(this: IUser, fullEmail: string) {
+  const [email, domain]: string[] = fullEmail.split('@');
+  this.email = email;
+  this.domain = domain;
 });
 
 const User = mongoose.model<IUser>('user', userSchema);

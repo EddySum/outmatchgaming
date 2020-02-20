@@ -11,7 +11,7 @@ describe('Ladder Model', () => {
   });
 
   afterEach(async () => {
-    //await mongoose.connection.db.dropDatabase();
+    await mongoose.connection.db.dropDatabase();
   });
 
   it('should save ladder', () => {

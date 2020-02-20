@@ -11,12 +11,14 @@ describe ('User model', () => {
   });
 
   afterEach(async () => {
-    //await mongoose.connection.db.dropDatabase();
+    await mongoose.connection.db.dropDatabase();
   });
 
   it('Should create the user', () => {
     const user: IUser = new User({
       username: "Eddy_Sumra",
+      fullEmail: "eddy@gmail.com"
+      
     });
 
     const error = user.validateSync();
@@ -50,6 +52,19 @@ describe ('User model', () => {
       let error = user.validateSync();
       expect(error).to.not.equal(undefined);
     });
+  });
+
+  describe('email field test', () => {
+    it('should have virtual email and domain', () => {
+      const user: IUser = new User({
+        username: "Eddy_Sumra",
+        fullEmail: "eddy@gmail.com"
+        
+      });
+  
+      expect(user.email).to.equal('eddy');
+      expect(user.domain).to.equal('gmail.com');
+    })
   });
 
   describe('psnUser field test', () => {

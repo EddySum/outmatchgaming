@@ -2,8 +2,6 @@ import mongoose, {Schema, Document } from 'mongoose';
 
 export interface ILadder extends Document {
   name: string
-  seasonStart: Date,
-  seasonEnd: Date,
   maxPlayers: Number
 }
 

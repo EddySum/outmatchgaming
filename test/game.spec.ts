@@ -11,7 +11,7 @@ describe('Game Model', () => {
   });
 
   afterEach(async () => {
-      /* mongoose.connection.db.dropDatabase(); */
+      mongoose.connection.db.dropDatabase();
   });
 
   it('should create game', () => {
