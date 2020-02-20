@@ -10,10 +10,6 @@ describe('Game Model', () => {
     });
   });
 
-  afterEach(async () => {
-      mongoose.connection.db.dropDatabase();
-  });
-
   it('should create game', () => {
     const newGame: IGame = new Game({
       name: 'Modern Warfare',
