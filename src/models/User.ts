@@ -6,6 +6,7 @@ export interface IUser extends Document {
   points: Number;
   email: String;
   domain: String;
+  fullEmail: String; //virtual
 }
 
 const userSchema: Schema = new Schema({
