@@ -1,28 +1,28 @@
 import User from '../models/User';
 import Session from '../models/Session'
-import express, {Request, Response} from 'express';
 import {authenticate} from '../middleware/auth'
+import {Router, Request, Response} from 'express';
+import bcrypt from 'bcrypt';
 
-const router = express.Router();
+const router = Router();
+const saltRounds = 3; // 12+ for production. Will be used in register route
 
 router.post('/login', async (req: Request, res: Response) => {
   const {fullEmail} = req.body;
 
-
-  //TODO: hash & password match
   const [email, domain]: string[] = fullEmail.split('@');
   const user = await User.findOne({email, domain});
 
   if (user) {
-    const session = await Session.create({userID: user?._id});
-    
-    res.cookie('session', session._id, { signed: true, httpOnly: true });
-
-    return res.sendStatus(200);
+    const passMatched = await bcrypt.compare(req.body.password, user.password);
+    if (passMatched) {
+      const session = await Session.create({userID: user?._id});
+      res.cookie('session', session._id, { signed: true, httpOnly: true });
+      
+      return res.sendStatus(200);
+    }
   }
-
   return res.sendStatus(400);
-  
 });
 
 router.post('/logout', async (req: Request, res: Response) => {
@@ -33,13 +33,10 @@ router.post('/logout', async (req: Request, res: Response) => {
       return res.sendStatus(200);
     }
   }
-
   return res.sendStatus(400);
 });
 
-
 router.get('/userID', [authenticate], (req: Request, res: Response) => {
-  console.log(res.locals.userID);
   res.send(res.locals.userID);
 });
 
