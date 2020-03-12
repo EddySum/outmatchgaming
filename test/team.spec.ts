@@ -25,7 +25,8 @@ describe('Team Model', () => {
     // create user id array to be used for 'players' property
     let user: IUser = new User({
       username: 'eddy',
-      fullEmail: 'adnansumra115@gmail.com'
+      fullEmail: 'adnansumra115@gmail.com',
+      password: '$2b$04$bE3SHpwYfUAFQUjIjzPEJeORelQj/z17viASj9ZJn8gFGpJcsPr4G'
     });
 
     user = await user.save();

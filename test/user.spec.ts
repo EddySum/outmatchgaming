@@ -17,8 +17,8 @@ describe ('User model', () => {
   it('Should create the user', () => {
     const user: IUser = new User({
       username: "Eddy_Sumra",
-      fullEmail: "eddy@gmail.com"
-      
+      fullEmail: "eddy@gmail.com",
+      password: '$2b$04$bE3SHpwYfUAFQUjIjzPEJeORelQj/z17viASj9ZJn8gFGpJcsPr4G'
     });
 
     const error = user.validateSync();
@@ -29,6 +29,7 @@ describe ('User model', () => {
     it('must have length bigger than 3', () => {
       let user: IUser = new User({
         username: "Ed",
+        password: '$2b$04$bE3SHpwYfUAFQUjIjzPEJeORelQj/z17viASj9ZJn8gFGpJcsPr4G'
       });
       
       let error = user.validateSync();
@@ -38,6 +39,7 @@ describe ('User model', () => {
     it('must have length smaller than 17', () => {
       let user: IUser = new User({
         username: "ThisNameIs17chars",
+        password: '$2b$04$bE3SHpwYfUAFQUjIjzPEJeORelQj/z17viASj9ZJn8gFGpJcsPr4G'
       });
       
       let error = user.validateSync();
@@ -47,6 +49,7 @@ describe ('User model', () => {
     it('must only have alphanumeric and underscore', () => {
       let user: IUser = new User({
         username: "E@%$#@",
+        password: '$2b$04$bE3SHpwYfUAFQUjIjzPEJeORelQj/z17viASj9ZJn8gFGpJcsPr4G'
       });
       
       let error = user.validateSync();
@@ -58,8 +61,8 @@ describe ('User model', () => {
     it('should have virtual email and domain', () => {
       const user: IUser = new User({
         username: "Eddy_Sumra",
+        password: '$2b$04$bE3SHpwYfUAFQUjIjzPEJeORelQj/z17viASj9ZJn8gFGpJcsPr4G',
         fullEmail: "eddy@gmail.com"
-        
       });
   
       expect(user.email).to.equal('eddy');
@@ -71,6 +74,7 @@ describe ('User model', () => {
     it ('must have length 3 or greater ', () => {
       let user: IUser = new User({
         username: "Eddy",
+        password: '$2b$04$bE3SHpwYfUAFQUjIjzPEJeORelQj/z17viASj9ZJn8gFGpJcsPr4G',
         psnUser: "py"
       });
       
@@ -87,6 +91,7 @@ describe ('User model', () => {
     it ('must have length 16 or smaller', () => {
       let user: IUser = new User({
         username: "Eddy",
+        password: '$2b$04$bE3SHpwYfUAFQUjIjzPEJeORelQj/z17viASj9ZJn8gFGpJcsPr4G',
         psnUser: "ThisNameIs17chars"
       });
       
@@ -103,6 +108,7 @@ describe ('User model', () => {
     it ('must only have alphanumeric, underscores and hyphens', () => {
       let user: IUser = new User({
         username: "Eddy",
+        password: '$2b$04$bE3SHpwYfUAFQUjIjzPEJeORelQj/z17viASj9ZJn8gFGpJcsPr4G',
         psnUser: "ed_sum-python"
       });
       
@@ -121,6 +127,7 @@ describe ('User model', () => {
     it('accepts positive values', () => {
       let user: IUser = new User({
         username: "Eddy",
+        password: '$2b$04$bE3SHpwYfUAFQUjIjzPEJeORelQj/z17viASj9ZJn8gFGpJcsPr4G',
         psnUser: "ed_sum-python",
         points: 0,
       });
@@ -132,6 +139,7 @@ describe ('User model', () => {
     it('must not be negative', () => {
       let user: IUser = new User({
         username: "Eddy",
+        password: '$2b$04$bE3SHpwYfUAFQUjIjzPEJeORelQj/z17viASj9ZJn8gFGpJcsPr4G',
         psnUser: "ed_sum-python",
         points: -1,
       });
