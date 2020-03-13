@@ -9,5 +9,5 @@ export const authenticate = async (req: Request, res: Response, next: NextFuncti
        return next();
      } 
   }
-  res.sendStatus(400);
+  return res.sendStatus(400);
 };
