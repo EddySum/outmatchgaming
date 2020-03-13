@@ -13,7 +13,7 @@ describe('Strong Param Middleware', () => {
   before(() => {
     mongoose.connect('mongodb://localhost:27017/outmatchgamingtest', {
       useNewUrlParser: true, 
-      useUnifiedTopology: true
+      useUnifiedTopology: true 
     });
   });
 
