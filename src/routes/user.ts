@@ -8,16 +8,18 @@ import { strongParam } from '../middleware/strongParam';
 
 const router = Router();
 const saltRounds = 3; // 12+ for production. Will be used in register route
+let strongParamConfig: { [key: string]: string; };
 
+strongParamConfig = {fullEmail: 'string', password: 'string'}
 //TODO: Need to add something to ensure multiple session are not created per user. 
-router.post('/login', async (req: Request, res: Response) => {
-  const {fullEmail} = req.body;
+router.post('/login', [strongParam(strongParamConfig)], async (req: Request, res: Response) => {
+  const {fullEmail} = res.locals;
 
   const [email, domain]: string[] = fullEmail.split('@');
   const user = await User.findOne({email, domain});
 
   if (user) {
-    const passMatched = await bcrypt.compare(req.body.password, user.password);
+    const passMatched = await bcrypt.compare(res.locals.password, user.password);
     if (passMatched) {
       const session = await Session.create({userID: user?._id});
       res.cookie('session', session._id, { signed: true, httpOnly: true });
@@ -28,7 +30,8 @@ router.post('/login', async (req: Request, res: Response) => {
   return res.sendStatus(400);
 });
 
-router.post('/logout', async (req: Request, res: Response) => {
+strongParamConfig = {}
+router.post('/logout', [strongParam(strongParamConfig)], async (req: Request, res: Response) => {
   if (req.signedCookies && req.signedCookies['session']) {
     const session = await Session.findByIdAndDelete(req.signedCookies['session']);
     res.clearCookie('session');
