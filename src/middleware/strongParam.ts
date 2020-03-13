@@ -7,11 +7,11 @@ export const strongParam = (params: {[key:string]: string}) => {
     req.body = null; //ensure weak params are not used
 
     Object.entries(params).forEach(([key, expectedType]) => {
-    const weakParamType = typeof weakParams[key];
-    console.log(weakParamType, expectedType);
-    if (weakParamType === expectedType) {
-      res.locals[key] = weakParams[key];
-    }
+      const weakParamType = typeof weakParams[key];
+    
+      if (weakParamType === expectedType) {
+        res.locals[key] = weakParams[key];
+      }
 
     });
     next();

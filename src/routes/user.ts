@@ -4,9 +4,12 @@ import {authenticate} from '../middleware/auth'
 import {Router, Request, Response} from 'express';
 import bcrypt from 'bcrypt';
 
+import { strongParam } from '../middleware/strongParam';
+
 const router = Router();
 const saltRounds = 3; // 12+ for production. Will be used in register route
 
+//TODO: Need to add something to ensure multiple session are not created per user. 
 router.post('/login', async (req: Request, res: Response) => {
   const {fullEmail} = req.body;
 
