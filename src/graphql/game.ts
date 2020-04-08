@@ -21,6 +21,13 @@ const createGame = {
   }
 }
 
+const getGames = {
+  type: new GraphQLList(GraphQLGame),
+  resolve: async () => {
+    return await Game.find({});
+  }
+}
+
 const getGame = {
   type: GraphQLGame,
   args: {
@@ -45,7 +52,9 @@ const getGamesByPlatform = {
   }
 }
 
+
 export const gameQueries = {
+  getGames,
   getGame,
   getGamesByPlatform
 };

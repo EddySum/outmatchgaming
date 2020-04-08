@@ -34,8 +34,34 @@ const getTeam = {
   }
 }
 
+const getTeamsByPlayer = {
+  type: new GraphQLList(GraphQLTeam),
+  args: {
+    playerId: {
+      type: new GraphQLNonNull(GraphQLID)
+    }
+  },
+  resolve: async (_: any, {playerId}: any) => {
+    return await Team.find({ playersId: playerId });
+  }
+}
+
+const getTeamsByLadder = {
+  type: new GraphQLList(GraphQLTeam),
+  args: {
+    ladderId: {
+      type: new GraphQLNonNull(GraphQLID)
+    }
+  },
+  resolve: async (_: any, {ladderId}: any) => {
+    return await Team.find({ ladderId });
+  }
+}
+
 export const teamQueries = {
-  getTeam
+  getTeam,
+  getTeamsByPlayer,
+  getTeamsByLadder
 };
 
 export const teamMutations = {
