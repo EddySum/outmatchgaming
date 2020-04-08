@@ -1,6 +1,7 @@
-import { GraphQLString, GraphQLID, GraphQLNonNull } from 'graphql';
-import GraphQLGame from './models/game';
+import { GraphQLString, GraphQLID, GraphQLNonNull, GraphQLList, GraphQLInputField, GraphQLInputObjectType, GraphQLInt,  } from 'graphql';
+import {GraphQLGame} from './models/game';
 import Game from '../models/Game';
+import { graphQLLadderInput } from './models/ladder';
 
 const createGame = {  
   type: GraphQLGame,
@@ -10,10 +11,13 @@ const createGame = {
     },
     platform: {
       type: new GraphQLNonNull(GraphQLString)
+    },
+    ladders: {
+      type: GraphQLList(graphQLLadderInput)
     }
   },
-  resolve: async (_: any, {name, platform}: any) => {
-    return await Game.create({name, platform});
+  resolve: async (_: any, {name, platform, ladders}: any) => {
+    return await Game.create({name, platform, ladders});
   }
 }
 
@@ -29,8 +33,21 @@ const getGame = {
   }
 }
 
+const getGamesByPlatform = {
+  type: new GraphQLList(GraphQLGame),
+  args: {
+    platform: {
+      type: new GraphQLNonNull(GraphQLString)
+    }
+  },
+  resolve: async (_: any, {platform}: any) => {
+    return await Game.find({platform});
+  }
+}
+
 export const gameQueries = {
-  getGame
+  getGame,
+  getGamesByPlatform
 };
 
 export const gameMutations = {

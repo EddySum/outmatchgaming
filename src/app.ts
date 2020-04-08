@@ -5,6 +5,7 @@ import dotenv from 'dotenv';
 import graphqlHTTP from 'express-graphql'
 import { GraphQLObjectType, GraphQLSchema } from 'graphql';
 import { gameMutations, gameQueries } from './graphql/game';
+import { teamQueries, teamMutations } from './graphql/team';
 
 /* Setup enviroment variables */
 dotenv.config();
@@ -35,14 +36,16 @@ app.use('', router);
 const rootQuery = new GraphQLObjectType({
   name: 'Query',
   fields: () => ({
-    ...gameQueries
+    ...gameQueries,
+    ...teamQueries
   })
 });
 
 const rootMutation = new GraphQLObjectType({
   name: 'Mutation',
   fields: () => ({
-    ...gameMutations
+    ...gameMutations,
+    ...teamMutations
   })
 });
 

@@ -18,7 +18,7 @@ export const ladderSchema: Schema = new Schema({
       }
     }
   },
-  maxTeamSize: {
+  maxPlayers: {
     type: Number,
     required: true,
   }

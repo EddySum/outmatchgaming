@@ -1,6 +1,7 @@
-import { GraphQLObjectType, GraphQLString, GraphQLID } from 'graphql';
+import { GraphQLObjectType, GraphQLString, GraphQLID, GraphQLList } from 'graphql';
+import {GraphQLLadder} from './ladder';
 
-export default new GraphQLObjectType({
+export const GraphQLGame = new GraphQLObjectType({
   name: 'Game',
   fields: {
     _id: {
@@ -11,6 +12,9 @@ export default new GraphQLObjectType({
     },
     platform: {
       type: GraphQLString
+    },
+    ladders: {
+      type: GraphQLList(GraphQLLadder)
     }
   }
 });
