@@ -1,6 +1,6 @@
 import { GraphQLString, GraphQLID, GraphQLNonNull, GraphQLList, GraphQLInputField, GraphQLInputObjectType, GraphQLInt, GraphQLFloat,  } from 'graphql';
 import {GraphQLTeam} from './models/team';
-import Team from '../models/Team';
+import Team, { ITeam } from '../models/Team';
 
 const createTeam = {  
   type: GraphQLTeam,
@@ -12,13 +12,46 @@ const createTeam = {
       type: new GraphQLNonNull(GraphQLID)
     },
     playersId: {
-      type: GraphQLList(GraphQLID)
+      type: new GraphQLNonNull(GraphQLList(GraphQLID))
     }
   },
   resolve: async (_: any, {name, ladderId, playersId}: any) => {
     return await Team.create({
       name, ladderId, playersId
     });
+  }
+}
+
+const addPlayerToTeam = {
+  type: GraphQLTeam,
+  args: {
+    _id: {
+      type: new GraphQLNonNull(GraphQLID)
+    },
+    playerId: {
+      type: new GraphQLNonNull(GraphQLList(GraphQLID))
+    },
+    userId: {
+      type: new GraphQLNonNull(GraphQLID)
+    }
+  },
+  resolve: async (_: any, {_id, playerId, userId}: any) => {
+    // TODO: create teamowner field & add validation for teamowner
+
+    const team = await Team.findOne({_id});
+
+    const playerExists = team?.playersId.some(id => {
+      console.log(id, playerId);
+      // strict comparison wont work due playerId being a list
+      return id == playerId[0];
+    });
+
+    if (playerExists) {
+      throw new Error("player is already on the team");
+    }
+
+    team?.playersId.push(playerId);
+    return await team?.save();
   }
 }
 
@@ -65,5 +98,6 @@ export const teamQueries = {
 };
 
 export const teamMutations = {
-  createTeam
+  createTeam,
+  addPlayerToTeam
 };

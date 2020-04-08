@@ -4,8 +4,8 @@ import User from './User';
 
 export interface ITeam extends Document {
   name: string;
-  ladder: mongoose.Schema.Types.ObjectId
-  players: [mongoose.Schema.Types.ObjectId]
+  ladderId: mongoose.Schema.Types.ObjectId
+  playersId: [mongoose.Schema.Types.ObjectId]
   points: number; 
 }
 
@@ -39,7 +39,6 @@ const teamSchema: Schema = new Schema({
     validate: {
       // ensure the array of ids exist in db. Fix later
       validator: async (ids: [mongoose.Schema.Types.ObjectId]) => {
-
         for (const id of ids) {
           const exists = await User.exists({ _id: id });
           if (exists == false) {
