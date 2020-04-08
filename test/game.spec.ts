@@ -17,7 +17,7 @@ describe('Game Model', () => {
       ladders: [
         {
           name: 'Doubles',
-          maxTeamSize: 2
+          maxPlayers: 2
         }
       ]
     });
@@ -80,15 +80,15 @@ describe('Game Model', () => {
         ladders: [
           {
             name: 'Squads',
-            maxTeamSize: 10
+            maxPlayers: 10
           },
           {
             name: 'Doubles',
-            maxTeamSize: 4
+            maxPlayers: 4
           },
           {
             name: 'Singles',
-            maxTeamSize: 1
+            maxPlayers: 1
           }
         ]
       });

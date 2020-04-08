@@ -17,7 +17,7 @@ describe('Ladder Model', () => {
   it('should save ladder', () => {
     const newLadder: ILadder = new Ladder({
       name: 'Doubles Ladder',
-      maxTeamSize: 2
+      maxPlayers: 2
     });
 
     const error = newLadder.validateSync();

@@ -4,7 +4,7 @@ import { ILadder, ladderSchema } from './Ladder';
 export interface IGame extends Document {
   name: string;
   platform: string;
-  ladders: ILadder;
+  ladders: ILadder[];
 }
 
 const gameSchema: Schema = new Schema({
