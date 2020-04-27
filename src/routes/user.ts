@@ -24,10 +24,12 @@ router.post('/login', [strongParam(strongParamConfig)], async (req: Request, res
       const session = await Session.create({userID: user?._id});
       res.cookie('session', session._id, { signed: true, httpOnly: true });
       
-      return res.sendStatus(200);
+      //return res.sendStatus(200);
+      return res.json(user);
     }
   }
-  return res.sendStatus(400);
+
+  return res.send(400);
 });
 
 strongParamConfig = {}
