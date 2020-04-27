@@ -7,6 +7,8 @@ import { GraphQLObjectType, GraphQLSchema } from 'graphql';
 import { gameMutations, gameQueries } from './graphql/game';
 import { teamQueries, teamMutations } from './graphql/team';
 
+var cors = require('cors')
+
 /* Setup enviroment variables */
 dotenv.config();
 
@@ -26,6 +28,7 @@ const app: express.Application = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }))
 app.use(cookieParser(process.env['COOKIE_SECRET']));
+app.use(cors()) // All requests. NOT FOR PRODUCTION
 
 const router = express.Router();
 
