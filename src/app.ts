@@ -28,7 +28,10 @@ const app: express.Application = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }))
 app.use(cookieParser(process.env['COOKIE_SECRET']));
-app.use(cors()) // All requests. NOT FOR PRODUCTION
+app.use(cors({
+  credentials: true,
+  origin: "http://localhost:3000" // client address
+})) 
 
 const router = express.Router();
 
