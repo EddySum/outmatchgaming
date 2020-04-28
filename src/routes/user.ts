@@ -24,8 +24,7 @@ router.post('/login', [strongParam(strongParamConfig)], async (req: Request, res
       const session = await Session.create({userID: user?._id});
       res.cookie('session', session._id, { signed: true, httpOnly: true });
       
-      //return res.sendStatus(200);
-      return res.json(user);
+      return res.sendStatus(200);
     }
   }
 
@@ -44,8 +43,16 @@ router.post('/logout', [strongParam(strongParamConfig)], async (req: Request, re
   return res.sendStatus(400);
 });
 
-router.get('/userID', [authenticate], (req: Request, res: Response) => {
-  res.send(res.locals.userID);
+router.get('/info', [authenticate], async (req: Request, res: Response) => {
+  const userID = res.locals.userID
+  
+  const user = await User.findById(userID);
+  const userInfo = {
+    username: user?.username,
+    email: user?.fullEmail,
+  }
+
+  return res.json(userInfo);
 });
 
 module.exports = router;
