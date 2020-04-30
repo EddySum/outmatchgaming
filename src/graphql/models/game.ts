@@ -15,6 +15,9 @@ export const GraphQLGame = new GraphQLObjectType({
     },
     ladders: {
       type: GraphQLList(GraphQLLadder)
+    },
+    imageLink: {
+      type: GraphQLString
     }
   }
 });

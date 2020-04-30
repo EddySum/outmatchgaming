@@ -5,6 +5,7 @@ export interface IGame extends Document {
   name: string;
   platform: string;
   ladders: ILadder[];
+  imageLink: string
 }
 
 const gameSchema: Schema = new Schema({
@@ -35,7 +36,11 @@ const gameSchema: Schema = new Schema({
     }
 
   },
-  ladders: [ladderSchema]
+  ladders: [ladderSchema],
+  imageLink: {
+    type: String
+  },
+  
 });
 
 const Game = mongoose.model<IGame>('game', gameSchema);

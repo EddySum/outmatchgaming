@@ -14,10 +14,13 @@ const createGame = {
     },
     ladders: {
       type: GraphQLList(graphQLLadderInput)
+    },
+    imageLink: {
+      type: GraphQLString
     }
   },
-  resolve: async (_: any, {name, platform, ladders}: any) => {
-    return await Game.create({name, platform, ladders});
+  resolve: async (_: any, {name, platform, ladders, imageLink}: any) => {
+    return await Game.create({name, platform, ladders, imageLink});
   }
 }
 
