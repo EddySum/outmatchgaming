@@ -1,6 +1,7 @@
 import { GraphQLString, GraphQLID, GraphQLNonNull, GraphQLList, GraphQLInputField, GraphQLInputObjectType, GraphQLInt, GraphQLFloat,  } from 'graphql';
 import {GraphQLTeam} from './models/team';
 import Team, { ITeam } from '../models/Team';
+import { Response } from 'express';
 
 const createTeam = {  
   type: GraphQLTeam,
@@ -10,14 +11,17 @@ const createTeam = {
     },
     ladderId: {
       type: new GraphQLNonNull(GraphQLID)
-    },
-    playersId: {
-      type: new GraphQLNonNull(GraphQLList(GraphQLID))
     }
   },
-  resolve: async (_: any, {name, ladderId, playersId}: any) => {
+  resolve: async (_: any, {name, ladderId}: any, res: Response) => {
+    const {userID} = res.locals; 
+
+    if (!userID) {
+      return;
+    }
+
     return await Team.create({
-      name, ladderId, playersId
+      name, ladderId, userID
     });
   }
 }
