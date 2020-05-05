@@ -43,7 +43,7 @@ router.post('/logout', [strongParam(strongParamConfig)], async (req: Request, re
   return res.sendStatus(400);
 });
 
-router.get('/info', [authenticate], async (req: Request, res: Response) => {
+router.get('/info', [authenticate()], async (req: Request, res: Response) => {
   const userID = res.locals.userID
   
   const user = await User.findById(userID);
