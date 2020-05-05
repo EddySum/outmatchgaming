@@ -1,11 +1,14 @@
 import express, { Request, Response } from 'express';
 import mongoose from 'mongoose'
 import cookieParser from 'cookie-parser';
+import { authenticate } from './middleware/auth'
 import dotenv from 'dotenv';
 import graphqlHTTP from 'express-graphql'
 import { GraphQLObjectType, GraphQLSchema } from 'graphql';
 import { gameMutations, gameQueries } from './graphql/game';
 import { teamQueries, teamMutations } from './graphql/team';
+import { ServerResponse, IncomingMessage } from 'http';
+
 
 var cors = require('cors')
 
@@ -55,13 +58,22 @@ const rootMutation = new GraphQLObjectType({
   })
 });
 
-app.use('/graphql', graphqlHTTP({
-  schema: new GraphQLSchema({ 
-    query: rootQuery,
-    mutation: rootMutation 
-  }),
-  graphiql: true,
-}));
+app.use(
+  '/graphql', 
+  authenticate({graphql: true}),
+  graphqlHTTP((req: IncomingMessage, res: ServerResponse) => {
+    return {
+      schema: new GraphQLSchema({ 
+        query: rootQuery,
+        mutation: rootMutation 
+      }),
+      context: res,
+      graphiql: true,
+    };
+  })
+)
+
+
 
 app.listen(5000, () => {
   console.log('Server Start')
