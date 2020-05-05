@@ -48,13 +48,15 @@ describe('Strong Param Middleware', () => {
   });
 
   it('should set userID given session id', async () => {
-    await authenticate(req, res, next);
+    const auth = authenticate();
+    await auth(req, res, next);
 
     expect(res.locals.userID).to.deep.equal(user._id);
   });
 
   it('should call next function', async () => {
-    await authenticate(req, res, next);
+    const auth = authenticate();
+    await auth(req, res, next);
 
     expect(next.calledOnce).to.equal(true);
   });
@@ -63,7 +65,8 @@ describe('Strong Param Middleware', () => {
     req.signedCookies['session'] = session._id;
     await Session.findByIdAndDelete(session._id);
     
-    await authenticate(req, res, next);
+    const auth = authenticate();
+    await auth(req, res, next);
 
     expect(res.locals.userID).to.equal(undefined);
   });
@@ -71,7 +74,8 @@ describe('Strong Param Middleware', () => {
   it('should not set userID given invalid session id', async () => {
     req.signedCookies['session'] = 'aaaaaaaaaaaaaaaaaaaaaaaa';
                                     
-    await authenticate(req, res, next);
+    const auth = authenticate();
+    await auth(req, res, next);
 
     expect(res.locals.userID).to.equal(undefined);
   });
@@ -79,7 +83,8 @@ describe('Strong Param Middleware', () => {
   it('should not set userID given no session id', async () => {
     req.signedCookies = {};
 
-    await authenticate(req, res, next);
+    const auth = authenticate();
+    await auth(req, res, next);
 
     expect(res.locals.userID).to.equal(undefined);
   });
@@ -87,7 +92,8 @@ describe('Strong Param Middleware', () => {
   it('should not set a userID given userID for session cookie', async () => {
     req.signedCookies['session'] = user._id;
 
-    await authenticate(req, res, next);
+    const auth = authenticate();
+    await auth(req, res, next);
 
     expect(res.locals.userID).to.equal(undefined);
   });
