@@ -21,7 +21,9 @@ const createTeam = {
     }
 
     return await Team.create({
-      name, ladderId, userID
+      name, 
+      ladderId, 
+      playersId: userID
     });
   }
 }
