@@ -48,6 +48,7 @@ router.get('/info', [authenticate()], async (req: Request, res: Response) => {
   
   const user = await User.findById(userID);
   const userInfo = {
+    id: user?.id,
     username: user?.username,
     email: user?.fullEmail,
   }
