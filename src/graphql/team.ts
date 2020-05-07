@@ -2,6 +2,7 @@ import { GraphQLString, GraphQLID, GraphQLNonNull, GraphQLList, GraphQLInputFiel
 import {GraphQLTeam} from './models/team';
 import Team, { ITeam } from '../models/Team';
 import { Response } from 'express';
+import User from '../models/User';
 
 const createTeam = {  
   type: GraphQLTeam,
@@ -69,7 +70,25 @@ const getTeam = {
     }
   },
   resolve: async (_: any, {_id}: any) => {
-    return await Team.findById(_id);
+    const team = await Team.findById(_id);
+
+    const getPlayers = async () => {
+      if (team) {
+        return Promise.all(team.playersId.map(playerId => User.findById(playerId)));
+      } else {
+        return null;
+      }
+    }
+
+    const players = await getPlayers();
+
+    return {
+      name: team?.name,
+      playersId: team?.playersId,
+      ladderId: team?.ladderId,
+      points: team?.points,
+      players
+    }
   }
 }
 

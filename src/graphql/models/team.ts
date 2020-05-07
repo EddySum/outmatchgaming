@@ -1,4 +1,5 @@
 import { GraphQLObjectType, GraphQLString, GraphQLID, GraphQLList, GraphQLFloat } from 'graphql';
+import { GraphQLUser } from './user';
 
 export const GraphQLTeam = new GraphQLObjectType({
   name: 'Team',
@@ -17,6 +18,9 @@ export const GraphQLTeam = new GraphQLObjectType({
     },
     points: {
       type: GraphQLFloat
+    },
+    players: {
+      type: GraphQLList(GraphQLUser)
     }
   }
 });
