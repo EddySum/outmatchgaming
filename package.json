@@ -35,7 +35,8 @@
     "start": "node ./dist/src/app.js",
     "dev": "nodemon ./src/app.ts",
     "build": "tsc -p .",
-    "test": "mocha --exit --recursive ./dist/test"
+    "test": "mocha --exit --recursive ./dist/test",
+    "seed": "npm run build\n node ./dist/seeder/seeder"
   },
   "author": "Adnan Sumra (Eddy)",
   "license": "ISC"
