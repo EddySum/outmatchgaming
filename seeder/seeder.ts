@@ -105,10 +105,12 @@ const seed = async () => {
     useUnifiedTopology: true
   });
 
+  /*  password entry is: 'PASSWORD' */
   const user = await User.create({
     username: "Persano",
     fullEmail: "persano@gmail.com",
     password: "$2b$04$bE3SHpwYfUAFQUjIjzPEJeORelQj/z17viASj9ZJn8gFGpJcsPr4G",
+    points: 200
   });
 
 
